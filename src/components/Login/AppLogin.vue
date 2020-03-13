@@ -35,7 +35,7 @@
 
 <script>
     import axios from "axios";
-    import { api_url } from '../../variables'
+    // import { api_url } from '../../variables'
     const STORAGE_KEY_USER = 'user_id';
     const STORAGE_KEY_TOKEN = 'user_token';
     export default {
@@ -55,7 +55,7 @@
         methods:{
             onSubmit(e) {
                 e.preventDefault();
-                axios.post(`${api_url}/user/login`, {
+                axios.post(`http://ekomapp.tech/api/user/login`, {
                     email: this.form.email,
                     password: this.form.password,
 
