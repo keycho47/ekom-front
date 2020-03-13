@@ -33,7 +33,7 @@
     import axios from "axios";
 
 
-    import { api_url } from '../../variables'
+    //import { api_url } from '../../variables'
     export default {
         name: "ProductForm",
         data(){
@@ -65,7 +65,7 @@
             addStock(e){
                 const token = localStorage.getItem('user_token');
                 e.preventDefault();
-                axios.post(`${api_url}/stock`, {
+                axios.post(`http://ekomapp.tech/api/stock`, {
                     product_id: this.productId,
                     quantity: this.amount,
                     entity_id: this.entityId,

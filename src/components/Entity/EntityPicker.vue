@@ -13,7 +13,7 @@
 <script>
 
     import axios from "axios";
-    import { api_url } from '../../variables'
+    //import { api_url } from '../../variables'
     const STORAGE_KEY = 'entity_id';
     export default {
         name: "EntityPicker",
@@ -28,7 +28,7 @@
         },
         created() {
             const token = localStorage.getItem('user_token');
-            axios.get(`${api_url}/entity`,{
+            axios.get(`http://ekomapp.tech/api/entity`,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

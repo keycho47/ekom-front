@@ -11,7 +11,7 @@
 <script>
 
     import axios from "axios";
-    import { api_url } from '../../variables'
+    //import { api_url } from '../../variables'
     const STORAGE_KEY = 'product_id';
     export default {
         name: "ProductList",
@@ -26,7 +26,7 @@
         },
         created() {
             const token = localStorage.getItem('user_token');
-            axios.get(`${api_url}/products`,{
+            axios.get(`http://ekomapp.tech/api/products`,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

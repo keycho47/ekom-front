@@ -15,7 +15,7 @@
 <script>
 
     import axios from "axios";
-    import { api_url } from '../../variables'
+    //import { api_url } from '../../variables'
     const STORAGE_KEY = 'client_id';
     export default {
         name: "ClientPicker",
@@ -30,7 +30,7 @@
         },
         created() {
             const token = localStorage.getItem('user_token');
-            axios.get(`${api_url}/clients`,{
+            axios.get(`http://ekomapp.tech/api/clients`,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

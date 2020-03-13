@@ -9,7 +9,7 @@
 <script>
 
     import axios from "axios";
-    import { api_url } from '../../variables'
+    //import { api_url } from '../../variables'
     export default {
         name: "CurrentState",
         data(){
@@ -19,7 +19,7 @@
         },
         created() {
             const token = localStorage.getItem('user_token');
-            axios.get(`${api_url}/report`,{
+            axios.get(`http://ekomapp.tech/api/report`,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
