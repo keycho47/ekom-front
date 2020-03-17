@@ -22,13 +22,17 @@ const actions = {
     },
     async getAuthUser({ commit }){
 
-        const response = await axios.get('http://127.0.0.1:8001/api/auth-user', {
+        let response = '';
+        await axios.get('http://127.0.0.1:8001/api/auth-user', {
             headers: {
                 'Authorization': `Bearer ${state.userToken}`
             }
-        }).catch(err => {
+        }).then(res => response = res)
+            .catch(err => {
             if (err.response.status === 401){
-                console.log(err);
+                err.response.name = 'test';
+                console.log(err.response);
+                response = err.response;
             }
         });
 
@@ -48,11 +52,8 @@ const mutations = {
         localStorage.setItem('user_token' , data.access_token)
     },
     setUser: (state , data)  => {
-        if (data !== undefined){
             state.user = data.user;
-        }else{
-            state.user.name = 'Login'
-        }
+
 
     },
     clearToken: (state , deleteToken)  => {
