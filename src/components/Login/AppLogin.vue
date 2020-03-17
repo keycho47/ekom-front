@@ -34,10 +34,11 @@
 </template>
 
 <script>
-    import axios from "axios";
-    // import { api_url } from '../../variables'
-    const STORAGE_KEY_USER = 'user_id';
-    const STORAGE_KEY_TOKEN = 'user_token';
+    import { mapActions } from 'vuex';
+    // import axios from "axios";
+    // // import { api_url } from '../../variables'
+    // const STORAGE_KEY_USER = 'user_id';
+    // const STORAGE_KEY_TOKEN = 'user_token';
     export default {
         name: "ProductForm",
         data(){
@@ -50,27 +51,29 @@
             }
         },
         created() {
-
         },
         methods:{
+            ...mapActions(["login"]),
             onSubmit(e) {
                 e.preventDefault();
-                axios.post(`http://ekomapp.tech/api/user/login`, {
-                    email: this.form.email,
-                    password: this.form.password,
-
-                })
-                    .then(function (response) {
-                        console.log(response);
-                        localStorage.setItem(STORAGE_KEY_USER , response.data.user.id );
-                        localStorage.setItem(STORAGE_KEY_TOKEN , response.data.access_token );
-                        this.error = response.data.data.massage;
-                    })
-                    .catch(err => {
-                        if (err.response.status === 401) {
-                            console.log(this.error);
-                        }
-                    });
+                this.login(this.form);
+                //axios.post(`http://ekomapp.tech/api/user/login`, {
+                // axios.post(`http://127.0.0.1:8001/api/user/login`,{
+                //     email: this.form.email,
+                //     password: this.form.password,
+                //
+                // })
+                //     .then(function (response) {
+                //         console.log(response);
+                //         localStorage.setItem(STORAGE_KEY_USER , response.data.user.id );
+                //         localStorage.setItem(STORAGE_KEY_TOKEN , response.data.access_token );
+                //         this.error = response.data.data.massage;
+                //     })
+                //     .catch(err => {
+                //         if (err.response.status === 401) {
+                //             console.log(this.error);
+                //         }
+                //     });
                 this.$router.push(`/`);
             },
         }

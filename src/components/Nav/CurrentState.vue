@@ -9,26 +9,30 @@
 <script>
 
     import axios from "axios";
+    import { mapGetters } from 'vuex';
     //import { api_url } from '../../variables'
     export default {
         name: "CurrentState",
+        computed: mapGetters(['userToken']),
         data(){
             return {
                 current_state: ''
             }
         },
         created() {
-            const token = localStorage.getItem('user_token');
-            axios.get(`http://ekomapp.tech/api/report`,{
+            //const token = localStorage.getItem('user_token');
+            //axios.get(`http://ekomapp.tech/api/report`,{
+            axios.get(`http://127.0.0.1:8001/api/report`,{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${this.userToken}`
                 }
             })
                 .then(res => this.current_state = res.data)
                 .catch(err => {
-                    if (err.response.status === 401) {
-                        this.$router.push(`/login`)
+                    if (err.response.status === 401){
+                        this.current_state = 0
                     }
+                    console.log(err);
                 })
         },
     }

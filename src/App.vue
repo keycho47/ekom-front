@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Početak</router-link>
-    </div>
-    <router-view/>
+    <NavBar v-if="$router.currentRoute.path !=='/login'"></NavBar>
+    <router-view style="margin-top:40px "/>
   </div>
 </template>
-
+<script>
+  import NavBar from '@/components/Nav/NavBar.vue'
+  export default {
+    name: 'Form',
+    components: {
+      NavBar
+    },
+  }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

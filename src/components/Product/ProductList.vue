@@ -11,10 +11,12 @@
 <script>
 
     import axios from "axios";
+    import {mapGetters , mapActions} from "vuex";
     //import { api_url } from '../../variables'
-    const STORAGE_KEY = 'product_id';
+    //const STORAGE_KEY = 'product_id';
     export default {
         name: "ProductList",
+        computed: mapGetters(['userToken']),
         data(){
             return {
                 productList: [],
@@ -25,10 +27,11 @@
             }
         },
         created() {
-            const token = localStorage.getItem('user_token');
-            axios.get(`http://ekomapp.tech/api/products`,{
+            //const token = localStorage.getItem('user_token');
+            //axios.get(`http://ekomapp.tech/api/products`,{
+            axios.get(`http://127.0.0.1:8001/api/products`,{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${this.userToken}`
                 }
             })
                 .then(res => this.productList = res.data)
@@ -39,8 +42,10 @@
                 })
         },
         methods:{
+            ...mapActions(['setProductId']),
             goToForm(productId) {
-                localStorage.setItem(STORAGE_KEY , productId );
+                //localStorage.setItem(STORAGE_KEY , productId );
+                this.setProductId(productId);
                 this.$router.push(`/form`)
             }
         }

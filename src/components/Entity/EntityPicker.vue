@@ -1,11 +1,30 @@
 <template>
     <div>
         <b-row class="justify-content-md-center">
-        <div :key="entity.id" v-for="entity in entities">
-            <b-col>
-            <b-button  style="margin: 5px" @click="goToProducts(entity.id)">{{entity.name}}</b-button>
+
+            <b-col v-if="userUser.role_id === 1">
+            <b-button  style="margin: 5px" @click="goToProducts(entities[0].id)">{{entities[0].name}}</b-button>
+            <b-button  style="margin: 5px" @click="goToProducts(entities[1].id)">{{entities[1].name}}</b-button>
+            <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
             </b-col>
-        </div>
+
+            <b-col v-if="userUser.role_id === 2">
+            <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
+            <b-button  style="margin: 5px" @click="goToProducts(entities[3].id)">{{entities[3].name}}</b-button>
+
+            </b-col>
+
+            <b-col v-if="userUser.role_id === 3">
+            <b-button  style="margin: 5px" @click="goToProducts(entities[0].id)">{{entities[0].name}}</b-button>
+            <b-button  style="margin: 5px" @click="goToProducts(entities[1].id)">{{entities[1].name}}</b-button>
+            <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
+            <b-button  style="margin: 5px" @click="goToProducts(entities[3].id)">{{entities[3].name}}</b-button>
+            </b-col>
+            <b-col v-if="userUser.role_id === ''">
+                <p> Greška = nemas rolu u vuexu odi na login</p>
+            </b-col>
+
+
         </b-row>
     </div>
 </template>
@@ -13,24 +32,24 @@
 <script>
 
     import axios from "axios";
+    import {mapGetters , mapActions} from "vuex";
+
     //import { api_url } from '../../variables'
-    const STORAGE_KEY = 'entity_id';
+    //const STORAGE_KEY = 'entity_id';
     export default {
-        name: "EntityPicker",
+        name: 'EntityPicker',
+        computed: mapGetters(['userToken' , 'userUser']),
         data(){
             return {
                 entities: [],
-                entity: {
-                    id: '',
-                    name: '',
-                }
+                name: ''
             }
         },
         created() {
-            const token = localStorage.getItem('user_token');
-            axios.get(`http://ekomapp.tech/api/entity`,{
+            this.getAuthUser();
+            axios.get(`http://127.0.0.1:8001/api/entity`,{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${this.userToken}`
                 }
             })
                 .then(res => this.entities = res.data.data)
@@ -41,9 +60,11 @@
                 })
         },
         methods:{
+            ...mapActions(['setEntityId' , 'getAuthUser']),
             goToProducts(entityId) {
-                localStorage.setItem(STORAGE_KEY , JSON.stringify(entityId));
-                this.$router.push(`/product`)
+                //localStorage.setItem(STORAGE_KEY , JSON.stringify(entityId));
+                this.setEntityId(entityId);
+                this.$router.push(`/client`)
             }
         }
     }

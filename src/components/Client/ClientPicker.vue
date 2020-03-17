@@ -4,7 +4,7 @@
         <div :key="client.id" v-for="client in clients">
 
             <b-col>
-                <b-button style="margin: 5px" @click="goToEntity(client.id)">{{client.name}}</b-button>
+                <b-button style="margin: 5px" @click="goToProduct(client.id)">{{client.name}}</b-button>
             </b-col>
 
         </div>
@@ -15,10 +15,12 @@
 <script>
 
     import axios from "axios";
+    import { mapGetters , mapActions } from 'vuex';
     //import { api_url } from '../../variables'
-    const STORAGE_KEY = 'client_id';
+    //const STORAGE_KEY = 'client_id';
     export default {
         name: "ClientPicker",
+        computed: mapGetters(['userToken']),
         data(){
             return {
                 clients: [],
@@ -28,11 +30,14 @@
                 },
             }
         },
+
         created() {
-            const token = localStorage.getItem('user_token');
-            axios.get(`http://ekomapp.tech/api/clients`,{
+            //const token = localStorage.getItem('user_token');
+            console.log(this.userToken);
+            //axios.get(`http://ekomapp.tech/api/clients`,{
+            axios.get(`http://127.0.0.1:8001/api/clients`,{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${this.userToken}`
                 }
             })
                 .then(res => this.clients = res.data)
@@ -43,9 +48,11 @@
                 })
         },
         methods:{
-            goToEntity(clientId) {
-                localStorage.setItem(STORAGE_KEY , JSON.stringify(clientId));
-                this.$router.push(`/entity`)
+            ...mapActions(['setClientId']),
+            goToProduct(clientId) {
+                //localStorage.setItem(STORAGE_KEY , JSON.stringify(clientId));
+                this.setClientId(clientId);
+                this.$router.push(`/product`)
             }
         }
     }
