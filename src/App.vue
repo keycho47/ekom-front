@@ -11,9 +11,6 @@
     components: {
       NavBar
     },
-    mounted() {
-      console.log(JSON.stringify(this.$route));
-    }
   }
 </script>
 <style>

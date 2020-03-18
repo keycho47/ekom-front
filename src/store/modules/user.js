@@ -14,7 +14,7 @@ const getters = {
 };
 const actions = {
     async login({ commit } , form){
-        const response = await axios.post('http://127.0.0.1:8001/api/user/login', {
+        const response = await axios.post('user/login', {
             email: form.email,
             password: form.password,
         });
@@ -23,7 +23,7 @@ const actions = {
     async getAuthUser({ commit }){
 
         let response = '';
-        await axios.get('http://127.0.0.1:8001/api/auth-user', {
+        await axios.get('auth-user', {
             headers: {
                 'Authorization': `Bearer ${state.userToken}`
             }
@@ -50,7 +50,7 @@ const mutations = {
         state.user = data.user;
         state.userToken = data.access_token;
         localStorage.setItem('user_token' , data.access_token);
-        this.$router.push(`/`);
+
     },
     setUser: (state , data)  => {
             state.user = data.user;

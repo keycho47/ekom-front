@@ -1,5 +1,5 @@
 import Vue from 'vue'
-//import axios from 'axios'
+import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -9,7 +9,11 @@ import VueCookies from 'vue-cookies'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-//axios.defaults.baseURL = 'http://127.0.0.1:8001/api/';
+// LOCAL
+//axios.defaults.baseURL = 'http://127.0.0.1:8002/api/;
+// PROD
+axios.defaults.baseURL = 'http://ekomapp.tech/api/';
+
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);

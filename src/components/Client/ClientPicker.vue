@@ -35,7 +35,7 @@
             //const token = localStorage.getItem('user_token');
             console.log(this.userToken);
             //axios.get(`http://ekomapp.tech/api/clients`,{
-            axios.get(`http://127.0.0.1:8001/api/clients`,{
+            axios.get(`clients`,{
                 headers: {
                     'Authorization': `Bearer ${this.userToken}`
                 }

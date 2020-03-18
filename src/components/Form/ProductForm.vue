@@ -66,7 +66,7 @@
                 //const token = localStorage.getItem('user_token');
                 e.preventDefault();
                 //axios.post(`http://ekomapp.tech/api/stock`, {
-                axios.post(`http://127.0.0.1:8001/api/stock`,{
+                axios.post(`stock`,{
                     product_id: this.product_id,
                     quantity: this.amount,
                     entity_id: this.entity_id,

@@ -61,7 +61,7 @@
         },
         mounted() {
             this.getAuthUser();
-            axios.get(`http://127.0.0.1:8001/api/entity`,{
+            axios.get(`entity`,{
                 headers: {
                     'Authorization': `Bearer ${this.userToken}`
                 }

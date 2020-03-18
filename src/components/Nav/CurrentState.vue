@@ -22,7 +22,7 @@
         created() {
             //const token = localStorage.getItem('user_token');
             //axios.get(`http://ekomapp.tech/api/report`,{
-            axios.get(`http://127.0.0.1:8001/api/report`,{
+            axios.get(`report`,{
                 headers: {
                     'Authorization': `Bearer ${this.userToken}`
                 }
