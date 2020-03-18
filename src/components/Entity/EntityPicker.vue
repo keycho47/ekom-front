@@ -3,22 +3,36 @@
         <b-row class="justify-content-md-center">
 
             <b-col v-if="userUser.role_id === 1">
-            <b-button  style="margin: 5px" @click="goToProducts(entities[0].id)">{{entities[0].name}}</b-button>
-            <b-button  style="margin: 5px" @click="goToProducts(entities[1].id)">{{entities[1].name}}</b-button>
-            <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
+                <template v-if="entities.length">
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[0].id)">{{entities[0].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[1].id)">{{entities[1].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[3].id)">{{entities[3].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[4].id)">{{entities[4].name}}</b-button>
+                </template>
             </b-col>
 
             <b-col v-if="userUser.role_id === 2">
-            <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
-            <b-button  style="margin: 5px" @click="goToProducts(entities[3].id)">{{entities[3].name}}</b-button>
+                <template v-if="entities.length">
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[1].id)">{{entities[1].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[4].id)">{{entities[4].name}}</b-button>
+                </template>
 
             </b-col>
 
             <b-col v-if="userUser.role_id === 3">
-            <b-button  style="margin: 5px" @click="goToProducts(entities[0].id)">{{entities[0].name}}</b-button>
-            <b-button  style="margin: 5px" @click="goToProducts(entities[1].id)">{{entities[1].name}}</b-button>
-            <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
-            <b-button  style="margin: 5px" @click="goToProducts(entities[3].id)">{{entities[3].name}}</b-button>
+                <template v-if="entities.length">
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[0].id)">{{entities[0].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[2].id)">{{entities[2].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[4].id)">{{entities[4].name}}</b-button>
+
+                </template>
+            </b-col>
+            <b-col v-if="userUser.role_id === 4">
+                <template v-if="entities.length">
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[3].id)">{{entities[3].name}}</b-button>
+                    <b-button  style="margin: 5px" @click="goToProducts(entities[4].id)">{{entities[4].name}}</b-button>
+                </template>
             </b-col>
             <b-col v-if="userUser.role_id === ''">
                 <p> Greška = nemas rolu u vuexu odi na login</p>
@@ -45,7 +59,7 @@
                 name: ''
             }
         },
-        created() {
+        mounted() {
             this.getAuthUser();
             axios.get(`http://127.0.0.1:8001/api/entity`,{
                 headers: {

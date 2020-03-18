@@ -49,7 +49,8 @@ const mutations = {
     setUserAndToken: (state , data)  => {
         state.user = data.user;
         state.userToken = data.access_token;
-        localStorage.setItem('user_token' , data.access_token)
+        localStorage.setItem('user_token' , data.access_token);
+        this.$router.push(`/`);
     },
     setUser: (state , data)  => {
             state.user = data.user;

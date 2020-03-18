@@ -44,11 +44,10 @@
             //curentState,
         },
         computed: mapGetters(['userUser']),
-        created() {
+        mounted() {
             if(this.$router.currentRoute.fullPath !== '/login'){
                 this.getAuthUser();
             }
-
         },
         methods:{
             ...mapActions(['getAuthUser','clearToken']),

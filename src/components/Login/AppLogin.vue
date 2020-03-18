@@ -74,7 +74,7 @@
                 //             console.log(this.error);
                 //         }
                 //     });
-                this.$router.push(`/`);
+
             },
         }
     }
