@@ -8,9 +8,10 @@ import VueCookies from 'vue-cookies'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import vuetify from './plugins/vuetify';
 
 // LOCAL
-//axios.defaults.baseURL = 'http://127.0.0.1:8002/api/;
+//axios.defaults.baseURL = 'http://127.0.0.1:8002/api/';
 // PROD
 axios.defaults.baseURL = 'http://ekomapp.tech/api/';
 
@@ -28,5 +29,6 @@ Vue.$cookies.config('7d');
 new Vue({
   store,
   router,
+  vuetify,
   render: h => h(App)
 }).$mount('#app');

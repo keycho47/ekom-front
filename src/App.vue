@@ -1,31 +1,46 @@
 <template>
-  <div id="app">
-    <NavBar v-if="$route.name !=='Login'"></NavBar>
-    <router-view style="margin-top:40px "/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
+    </v-app-bar>
+    <v-content>
+      <NavBar/>
+    </v-content>
+  </v-app>
 </template>
+
 <script>
-  import NavBar from '@/components/Nav/NavBar.vue'
-  export default {
-    name: 'Form',
-    components: {
-      NavBar
-    },
-  }
+import NavBar from '@/components/Nav/NavBar.vue'
+export default {
+  name: 'App',
+  components: {
+    NavBar
+  },
+
+  data: () => ({
+    //
+  }),
+};
 </script>
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-</style>

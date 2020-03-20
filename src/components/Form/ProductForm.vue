@@ -5,7 +5,7 @@
             <label>
                 <b-input v-model="amount" type="text" name="ProductNumber" placeholder=" Add..."/>
             </label>
-            <b-button class="submit-btn" type="submit" variant="primary">Add</b-button>
+            <b-button class="submit-btn" type="submit" variant="primary">Dodaj</b-button>
         </form>
         </b-row>
         <b-row class="justify-content-md-center">
@@ -31,13 +31,13 @@
 
 <script>
     import axios from "axios";
-    import {mapActions, mapGetters} from "vuex";
+    import {mapGetters, mapActions} from "vuex";
 
 
     //import { api_url } from '../../variables'
     export default {
         name: "ProductForm",
-        computed: mapGetters(['userToken' , 'userUser', 'client_id' ,'product_id' ,'entity_id']),
+        computed: mapGetters([ 'getProfile','client_id' ,'product_id' ,'entity_id']),
         data(){
             return{
                 productId: '',
@@ -52,10 +52,10 @@
             }
         },
         created() {
-            this.getAuthUser();
+            this.UserRequest();
         },
         methods:{
-            ...mapActions(["getAuthUser"]),
+            ...mapActions(['UserRequest']),
             numDelete(){
                 this.amount = this.amount.slice(0, -1);
             },
@@ -63,19 +63,19 @@
                 this.amount = `${this.amount}${num}`
             },
             addStock(e){
-                //const token = localStorage.getItem('user_token');
+                const token = localStorage.getItem('user-token');
                 e.preventDefault();
-                //axios.post(`http://ekomapp.tech/api/stock`, {
+                //axios.post(`http://ekomapp.tech/api/stock`,
                 axios.post(`stock`,{
                     product_id: this.product_id,
                     quantity: this.amount,
                     entity_id: this.entity_id,
                     client_id: this.client_id,
                     description: 'desc',
-                    user_id: this.userUser.id,
+                    user_id: this.getProfile.id,
                 },{
                     headers: {
-                        'Authorization': `Bearer ${this.userToken}`
+                        'Authorization': `Bearer ${token}`
                     }
                 })
                     .then(function (response) {

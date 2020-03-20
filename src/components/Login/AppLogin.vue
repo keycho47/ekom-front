@@ -1,67 +1,80 @@
 <template>
     <div>
+        <v-app id="inspire">
+                <v-container
+                        fluid
+                        fill-height
+                >
+                    <v-layout
+                            align-center
+                            justify-center
+                    >
+                        <v-flex
+                                xs12
+                                sm8
+                                md4
+                        >
+                            <v-card class="elevation-12">
+                                <v-toolbar
+                                        color="primary"
+                                        dark
+                                        flat
+                                >
+                                    <v-toolbar-title>Login form</v-toolbar-title>
+                                    <v-spacer></v-spacer>
+                                </v-toolbar>
+                                <v-card-text>
+                                    <v-form>
+                                        <v-text-field
+                                                label="Email"
+                                                name="email"
+                                                type="text"
+                                                v-model="email"
+                                        ></v-text-field>
 
-        <b-row class="justify-content-md-center">
-        <b-form @submit="onSubmit">
-            <b-form-group
-                    id="input-group-1"
-                    label="Email address:"
-                    label-for="input-1"
-                    description="We'll never share your email with anyone else."
-            >
-                <b-form-input
-                        id="input-1"
-                        v-model="form.email"
-                        type="email"
-                        required
-                        placeholder="Enter email"
-                />
-            </b-form-group>
-            <label for="text-password">Password</label>
-            <b-input type="password" id="text-password" v-model="form.password" aria-describedby="password-help-block"/>
-            <b-form-text id="password-help-block">
-                Your password must be 8-20 characters long, contain letters and numbers, and must not
-                contain spaces, special characters, or emoji.
-            </b-form-text>
-
-            <b-button class="submit-btn" type="submit" variant="primary">Login</b-button>
-            <p :if="error">{{error}}</p>
-        </b-form>
-        </b-row>
+                                        <v-text-field
+                                                id="password"
+                                                label="Password"
+                                                name="password"
+                                                type="password"
+                                                v-model="password"
+                                        ></v-text-field>
+                                    </v-form>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn @click="login" color="primary">Login</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+        </v-app>
     </div>
 
 
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-    // import axios from "axios";
-    // // import { api_url } from '../../variables'
-    // const STORAGE_KEY_USER = 'user_id';
-    // const STORAGE_KEY_TOKEN = 'user_token';
+    import { mapActions } from "vuex";
     export default {
-        name: "ProductForm",
-        data(){
-            return{
-                form: {
-                    email: '',
-                    password: ''
-                },
-                error: ''
+        name: "login",
+        data() {
+            return {
+                email: "",
+                password: ""
+            };
+        },
+        methods: {
+            ...mapActions(["AuthRequest"]),
+            login(){
+                const { email, password } = this;
+                this.AuthRequest({ email, password }).then(() => {
+                    this.$router.push("/");
+                });
             }
-        },
-        created() {
-        },
-        methods:{
-            ...mapActions(["login"]),
-            onSubmit(e) {
-                e.preventDefault();
-                this.login(this.form);
-                this.$router.push(`/`);
-
-            },
         }
-    }
+    };
 </script>
 
 <style scoped>

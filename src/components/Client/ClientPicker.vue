@@ -32,12 +32,12 @@
         },
 
         created() {
-            //const token = localStorage.getItem('user_token');
-            console.log(this.userToken);
+            const token = localStorage.getItem('user-token');
+            //console.log(this.userToken);
             //axios.get(`http://ekomapp.tech/api/clients`,{
             axios.get(`clients`,{
                 headers: {
-                    'Authorization': `Bearer ${this.userToken}`
+                    'Authorization': `Bearer ${token}`
                 }
             })
                 .then(res => this.clients = res.data)

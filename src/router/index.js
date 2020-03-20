@@ -15,18 +15,24 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Client.vue'),
         meta: {requiresAuth: true},
         beforeEnter: (to, from, next) => {
-            if (store.getters.userUser.role_id === 3) {
+            if (store.getters.getProfile.role_id === 3) {
                 next()
             } else {
                 store.dispatch('setClientId', 1).then(() => next({name: 'Product'}));
             }
+            if (store.getters.isAuthenticated) {
+                next();
+                return;
+            }
+            next("/login");
         }
     },
 
     {
         path: '/login',
         name: 'Login',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+        beforeEnter: ifNotAuthenticated
     },
     {
         path: '/form',
@@ -36,6 +42,8 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/Form.vue'),
         meta: {requiresAuth: true},
+        beforeEnter: ifAuthenticated
+
     },
     {
         path: '/product',
@@ -45,12 +53,15 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/Product.vue'),
         meta: {requiresAuth: true},
+        beforeEnter: ifAuthenticated
+
     },
     {
         path: '/',
         name: 'Entity',
         component: () => import(/* webpackChunkName: "about" */ '../views/Entity.vue'),
         meta: {requiresAuth: true},
+        beforeEnter: ifAuthenticated
     },
     {
         path: '*',
@@ -58,32 +69,29 @@ const routes = [
     }
 ];
 
+
+
+const ifNotAuthenticated = (to, from, next) => {
+    if (!store.getters.isAuthenticated) {
+        next();
+        return;
+    }
+    next("/");
+};
+
+const ifAuthenticated = (to, from, next) => {
+    if (store.getters.isAuthenticated) {
+        next();
+        return;
+    }
+    next("/login");
+};
+
+
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
-});
-router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth) {
-        if (localStorage.getItem('user_token') !== null) {
-            next();
-        } else {
-            next({name: 'Login'})
-        }
-    }
-    if (to.path !== '/') {
-        if (to.path !== '/login') {
-            if (store.getters.entity_id === '') {
-                next({name: 'Entity'})
-            } else {
-                next();
-            }
-        } else {
-            next();
-            return;
-        }
-    }
-    next();
 });
 router.onError(err => {
     console.error(`Error message from router : ${err}`);

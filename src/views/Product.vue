@@ -1,8 +1,14 @@
 <template>
-    <div class="home">
-        <h1>Proizvod : </h1>
-        <ProductList/>
-    </div>
+    <v-container>
+        <v-card>
+            <v-container>
+                <v-card-title class="flex display-2 font-weight-light font-italic">
+                    Proizvod :
+                </v-card-title>
+                <ProductList/>
+            </v-container>
+        </v-card>
+    </v-container>
 </template>
 
 <script>

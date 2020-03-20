@@ -2,7 +2,9 @@
     <b-container>
     <div class="productList">
     <div :key="product.id" v-for="product in productList">
-        <b-button class="product" @click="goToForm(product.id)">{{product.name}}</b-button>
+        <v-card>
+            <b-button class="product" @click="goToForm(product.id)">{{product.name}}</b-button>
+        </v-card>
     </div>
     </div>
     </b-container>
@@ -27,11 +29,13 @@
             }
         },
         created() {
-            //const token = localStorage.getItem('user_token');
+
+            const token = localStorage.getItem('user-token');
+            this.UserRequest();
             //axios.get(`http://ekomapp.tech/api/products`,{
             axios.get(`products`,{
                 headers: {
-                    'Authorization': `Bearer ${this.userToken}`
+                    'Authorization': `Bearer ${token}`
                 }
             })
                 .then(res => this.productList = res.data)
@@ -42,7 +46,7 @@
                 })
         },
         methods:{
-            ...mapActions(['setProductId']),
+            ...mapActions(['setProductId' , 'UserRequest']),
             goToForm(productId) {
                 //localStorage.setItem(STORAGE_KEY , productId );
                 this.setProductId(productId);

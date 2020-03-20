@@ -1,64 +1,48 @@
-import axios from 'axios';
+import Vue from "vue";
 
-const state = {
-    user: {
-        name: '',
-        id: '',
-        role_id: '',
-    },
-    userToken:  localStorage.getItem('user_token') || null,
-};
+import axios from "axios";
+
+
+const state = { status: "", profile: {} };
+
 const getters = {
-    userToken: (state) => state.userToken,
-    userUser: (state) => state.user
+    getProfile: state => state.profile,
+    isProfileLoaded: state => !!state.profile.name
 };
+
 const actions = {
-    async login({ commit } , form){
-        const response = await axios.post('user/login', {
-            email: form.email,
-            password: form.password,
-        });
-        commit('setUserAndToken', response.data);
-    },
-    async getAuthUser({ commit }){
-
-        let response = '';
-        await axios.get('auth-user', {
+    UserRequest: ({ commit, dispatch }) => {
+        commit('UserRequest');
+        const token = localStorage.getItem('user-token');
+        axios.get("auth-user",{
             headers: {
-                'Authorization': `Bearer ${state.userToken}`
+                'Authorization': `Bearer ${token}`
             }
-        }).then(res => response = res)
-            .catch(err => {
-            if (err.response.status === 401){
-                err.response.name = 'test';
-                console.log(err.response);
-                response = err.response;
-            }
-        });
-
-
-        commit('setUser', response.data);
-    },
-    async clearToken({ commit }){
-        const deleteToken = '';
-        commit('clearToken' , deleteToken);
+        })
+            .then(resp => {
+                commit('UserSuccess', resp.data.user);
+            })
+            .catch(() => {
+                commit('UserError');
+                // if resp is unauthorized, logout, to
+                dispatch('AuthLogout');
+            });
     }
-
 };
+
 const mutations = {
-    setUserAndToken: (state , data)  => {
-        state.user = data.user;
-        state.userToken = data.access_token;
-        localStorage.setItem('user_token' , data.access_token);
-
+    UserRequest: state => {
+        state.status = "loading";
     },
-    setUser: (state , data)  => {
-            state.user = data.user;
-
-
+    UserSuccess: (state, resp) => {
+        state.status = "success";
+        Vue.set(state, "profile", resp);
     },
-    clearToken: (state , deleteToken)  => {
-        state.userToken = deleteToken;
+    UserError: state => {
+        state.status = "error";
+    },
+    AuthLogout: state => {
+        state.profile = {};
     }
 };
 
@@ -67,4 +51,4 @@ export default {
     getters,
     actions,
     mutations
-}
+};
