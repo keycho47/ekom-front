@@ -11,9 +11,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import vuetify from './plugins/vuetify';
 
 // LOCAL
-//axios.defaults.baseURL = 'http://127.0.0.1:8002/api/';
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 // PROD
-axios.defaults.baseURL = 'http://ekomapp.tech/api/';
+//axios.defaults.baseURL = 'http://ekomapp.tech/api/';
 
 
 // Install BootstrapVue
